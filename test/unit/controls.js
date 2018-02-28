@@ -1,10 +1,10 @@
-module('Controls');
+module("Controls");
 
-test('should hide volume control if it\'s not supported', function(){
+test("should hide volume control if it's not supported", function() {
   expect(2);
 
   var noop, player, volumeControl, muteToggle;
-  noop = function(){};
+  noop = function() {};
   player = {
     id: noop,
     on: noop,
@@ -14,31 +14,37 @@ test('should hide volume control if it\'s not supported', function(){
         volumeControl: false
       }
     },
-    volume: function(){},
-    muted: function(){}
+    volume: function() {},
+    muted: function() {}
   };
 
   volumeControl = new vjs.VolumeControl(player);
   muteToggle = new vjs.MuteToggle(player);
 
-  ok(volumeControl.el().className.indexOf('vjs-hidden') >= 0, 'volumeControl is not hidden');
-  ok(muteToggle.el().className.indexOf('vjs-hidden') >= 0, 'muteToggle is not hidden');
+  ok(
+    volumeControl.el().className.indexOf("vjs-hidden") >= 0,
+    "volumeControl is not hidden"
+  );
+  ok(
+    muteToggle.el().className.indexOf("vjs-hidden") >= 0,
+    "muteToggle is not hidden"
+  );
 });
 
-test('should test and toggle volume control on `loadstart`', function(){
+test("should test and toggle volume control on `loadstart`", function() {
   var noop, listeners, player, volumeControl, muteToggle, i;
-  noop = function(){};
+  noop = function() {};
   listeners = [];
   player = {
     id: noop,
-    on: function(event, callback){
+    on: function(event, callback) {
       listeners.push(callback);
     },
     ready: noop,
-    volume: function(){
+    volume: function() {
       return 1;
     },
-    muted: function(){
+    muted: function() {
       return false;
     },
     tech: {
@@ -51,35 +57,47 @@ test('should test and toggle volume control on `loadstart`', function(){
   volumeControl = new vjs.VolumeControl(player);
   muteToggle = new vjs.MuteToggle(player);
 
-  ok(volumeControl.el().className.indexOf('vjs-hidden') < 0,
-     'volumeControl is hidden initially');
-  ok(muteToggle.el().className.indexOf('vjs-hidden') < 0,
-     'muteToggle is hidden initially');
+  ok(
+    volumeControl.el().className.indexOf("vjs-hidden") < 0,
+    "volumeControl is hidden initially"
+  );
+  ok(
+    muteToggle.el().className.indexOf("vjs-hidden") < 0,
+    "muteToggle is hidden initially"
+  );
 
   player.tech.features.volumeControl = false;
   for (i = 0; i < listeners.length; i++) {
     listeners[i]();
   }
 
-  ok(volumeControl.el().className.indexOf('vjs-hidden') >= 0,
-     'volumeControl does not hide itself');
-  ok(muteToggle.el().className.indexOf('vjs-hidden') >= 0,
-     'muteToggle does not hide itself');
+  ok(
+    volumeControl.el().className.indexOf("vjs-hidden") >= 0,
+    "volumeControl does not hide itself"
+  );
+  ok(
+    muteToggle.el().className.indexOf("vjs-hidden") >= 0,
+    "muteToggle does not hide itself"
+  );
 
   player.tech.features.volumeControl = true;
   for (i = 0; i < listeners.length; i++) {
     listeners[i]();
   }
 
-  ok(volumeControl.el().className.indexOf('vjs-hidden') < 0,
-     'volumeControl does not show itself');
-  ok(muteToggle.el().className.indexOf('vjs-hidden') < 0,
-     'muteToggle does not show itself');
+  ok(
+    volumeControl.el().className.indexOf("vjs-hidden") < 0,
+    "volumeControl does not show itself"
+  );
+  ok(
+    muteToggle.el().className.indexOf("vjs-hidden") < 0,
+    "muteToggle does not show itself"
+  );
 });
 
-test('calculateDistance should use changedTouches, if available', function() {
+test("calculateDistance should use changedTouches, if available", function() {
   var noop, player, slider, event;
-  noop = function(){};
+  noop = function() {};
   player = {
     id: noop,
     on: noop,
@@ -87,16 +105,22 @@ test('calculateDistance should use changedTouches, if available', function() {
   };
   slider = new vjs.Slider(player);
   document.body.appendChild(slider.el_);
-  slider.el_.style.position = 'absolute';
-  slider.el_.style.width = '200px';
-  slider.el_.style.left = '0px';
+  slider.el_.style.position = "absolute";
+  slider.el_.style.width = "200px";
+  slider.el_.style.left = "0px";
 
   event = {
     pageX: 10,
-    changedTouches: [{
-      pageX: 100
-    }]
+    changedTouches: [
+      {
+        pageX: 100
+      }
+    ]
   };
 
-  equal(slider.calculateDistance(event), 0.5, 'we should have touched exactly in the center, so, the ratio should be half');
+  equal(
+    slider.calculateDistance(event),
+    0.5,
+    "we should have touched exactly in the center, so, the ratio should be half"
+  );
 });
