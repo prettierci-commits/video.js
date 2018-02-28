@@ -11,7 +11,7 @@
  */
 vjs.MediaTechController = vjs.Component.extend({
   /** @constructor */
-  init: function(player, options, ready){
+  init: function(player, options, ready) {
     vjs.Component.call(this, player, options, ready);
 
     this.initControlsListeners();
@@ -38,13 +38,13 @@ vjs.MediaTechController = vjs.Component.extend({
  * keep the controls showing, but that shouldn't be an issue. A touch and hold on
  * any controls will still keep the user active
  */
-vjs.MediaTechController.prototype.initControlsListeners = function(){
+vjs.MediaTechController.prototype.initControlsListeners = function() {
   var player, tech, activateControls, deactivateControls;
 
   tech = this;
   player = this.player();
 
-  var activateControls = function(){
+  var activateControls = function() {
     if (player.controls() && !player.usingNativeControls()) {
       tech.addControlsListeners();
     }
@@ -55,18 +55,18 @@ vjs.MediaTechController.prototype.initControlsListeners = function(){
   // Set up event listeners once the tech is ready and has an element to apply
   // listeners to
   this.ready(activateControls);
-  player.on('controlsenabled', activateControls);
-  player.on('controlsdisabled', deactivateControls);
+  player.on("controlsenabled", activateControls);
+  player.on("controlsdisabled", deactivateControls);
 };
 
-vjs.MediaTechController.prototype.addControlsListeners = function(){
+vjs.MediaTechController.prototype.addControlsListeners = function() {
   var preventBubble, userWasActive;
 
   // Some browsers (Chrome & IE) don't trigger a click on a flash swf, but do
   // trigger mousedown/up.
   // http://stackoverflow.com/questions/1444562/javascript-onclick-event-over-flash-object
   // Any touch events are set to block the mousedown event from happening
-  this.on('mousedown', this.onClick);
+  this.on("mousedown", this.onClick);
 
   // We need to block touch events on the video element from bubbling up,
   // otherwise they'll signal activity prematurely. The specific use case is
@@ -79,7 +79,7 @@ vjs.MediaTechController.prototype.addControlsListeners = function(){
   // at the player level starts the touchInProgress interval. We can still
   // report activity on the other events, but won't let them bubble for
   // consistency. We don't want to bubble a touchend without a touchstart.
-  this.on('touchstart', function(event) {
+  this.on("touchstart", function(event) {
     // Stop the mouse events from also happening
     event.preventDefault();
     event.stopPropagation();
@@ -87,7 +87,7 @@ vjs.MediaTechController.prototype.addControlsListeners = function(){
     userWasActive = this.player_.userActive();
   });
 
-  preventBubble = function(event){
+  preventBubble = function(event) {
     event.stopPropagation();
     if (userWasActive) {
       this.player_.reportUserActivity();
@@ -95,40 +95,40 @@ vjs.MediaTechController.prototype.addControlsListeners = function(){
   };
 
   // Treat all touch events the same for consistency
-  this.on('touchmove', preventBubble);
-  this.on('touchleave', preventBubble);
-  this.on('touchcancel', preventBubble);
-  this.on('touchend', preventBubble);
+  this.on("touchmove", preventBubble);
+  this.on("touchleave", preventBubble);
+  this.on("touchcancel", preventBubble);
+  this.on("touchend", preventBubble);
 
   // Turn on component tap events
   this.emitTapEvents();
 
   // The tap listener needs to come after the touchend listener because the tap
   // listener cancels out any reportedUserActivity when setting userActive(false)
-  this.on('tap', this.onTap);
+  this.on("tap", this.onTap);
 };
 
 /**
  * Remove the listeners used for click and tap controls. This is needed for
  * toggling to controls disabled, where a tap/touch should do nothing.
  */
-vjs.MediaTechController.prototype.removeControlsListeners = function(){
+vjs.MediaTechController.prototype.removeControlsListeners = function() {
   // We don't want to just use `this.off()` because there might be other needed
   // listeners added by techs that extend this.
-  this.off('tap');
-  this.off('touchstart');
-  this.off('touchmove');
-  this.off('touchleave');
-  this.off('touchcancel');
-  this.off('touchend');
-  this.off('click');
-  this.off('mousedown');
+  this.off("tap");
+  this.off("touchstart");
+  this.off("touchmove");
+  this.off("touchleave");
+  this.off("touchcancel");
+  this.off("touchend");
+  this.off("click");
+  this.off("mousedown");
 };
 
 /**
  * Handle a click on the media element. By default will play/pause the media.
  */
-vjs.MediaTechController.prototype.onClick = function(event){
+vjs.MediaTechController.prototype.onClick = function(event) {
   // We're using mousedown to detect clicks thanks to Flash, but mousedown
   // will also be triggered with right-clicks, so we need to prevent that
   if (event.button !== 0) return;
@@ -149,7 +149,7 @@ vjs.MediaTechController.prototype.onClick = function(event){
  * activity state, which hides and shows the controls.
  */
 
-vjs.MediaTechController.prototype.onTap = function(){
+vjs.MediaTechController.prototype.onTap = function() {
   this.player().userActive(!this.player().userActive());
 };
 
@@ -171,16 +171,24 @@ vjs.media = {};
  * List of default API methods for any MediaTechController
  * @type {String}
  */
-vjs.media.ApiMethods = 'play,pause,paused,currentTime,setCurrentTime,duration,buffered,volume,setVolume,muted,setMuted,width,height,supportsFullScreen,enterFullScreen,src,load,currentSrc,preload,setPreload,autoplay,setAutoplay,loop,setLoop,error,networkState,readyState,seeking,initialTime,startOffsetTime,played,seekable,ended,videoTracks,audioTracks,videoWidth,videoHeight,textTracks,defaultPlaybackRate,playbackRate,mediaGroup,controller,controls,defaultMuted'.split(',');
+vjs.media.ApiMethods = "play,pause,paused,currentTime,setCurrentTime,duration,buffered,volume,setVolume,muted,setMuted,width,height,supportsFullScreen,enterFullScreen,src,load,currentSrc,preload,setPreload,autoplay,setAutoplay,loop,setLoop,error,networkState,readyState,seeking,initialTime,startOffsetTime,played,seekable,ended,videoTracks,audioTracks,videoWidth,videoHeight,textTracks,defaultPlaybackRate,playbackRate,mediaGroup,controller,controls,defaultMuted".split(
+  ","
+);
 // Create placeholder methods for each that warn when a method isn't supported by the current playback technology
 
-function createMethod(methodName){
-  return function(){
-    throw new Error('The "'+methodName+'" method is not available on the playback technology\'s API');
+function createMethod(methodName) {
+  return function() {
+    throw new Error(
+      'The "' +
+        methodName +
+        "\" method is not available on the playback technology's API"
+    );
   };
 }
 
 for (var i = vjs.media.ApiMethods.length - 1; i >= 0; i--) {
   var methodName = vjs.media.ApiMethods[i];
-  vjs.MediaTechController.prototype[vjs.media.ApiMethods[i]] = createMethod(methodName);
+  vjs.MediaTechController.prototype[vjs.media.ApiMethods[i]] = createMethod(
+    methodName
+  );
 }
