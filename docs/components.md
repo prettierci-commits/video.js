@@ -1,5 +1,5 @@
-Components
-===
+# Components
+
 The Video.js player is built on top of a simple, custom UI components architecture. The player class and all control classes inherit from the Component class, or a subclass of Component.
 
 ```js
@@ -14,13 +14,13 @@ The UI component architecture makes it easier to add child components to a paren
 
 ```js
 // Adding a new control to the player
-myPlayer.addChild('BigPlayButton');
+myPlayer.addChild("BigPlayButton");
 ```
 
 Every component has an associated DOM element, and when you add a child component, it inserts the element of that child into the element of the parent.
 
 ```js
-myPlayer.addChild('BigPlayButton');
+myPlayer.addChild("BigPlayButton");
 ```
 
 Results in:
@@ -60,24 +60,20 @@ Player
         MuteToggle
 ```
 
-Component Methods
------------------
+## Component Methods
 
-### addChild() ###
+### addChild()
+
 Add a child component to myComponent. This will also insert the child component's DOM element into myComponent's element.
 
-
-
 ```js
-myComponent.addChild('');
+myComponent.addChild("");
 ```
-
 
 myPlayer.addChild('BigPlayButton');
 myPlayer.removeChild('BigPlayButton');
 myPlayer.getChild('BiPlayButton');
 myPlayer.children();
-
 
 myPlayer.getChildById('biPlayButton');
 myPlayer.removeChildById('my-player-big-play-button');
