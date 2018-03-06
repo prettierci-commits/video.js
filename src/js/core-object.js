@@ -2,7 +2,7 @@
  * Core Object/Class for objects that use inheritance + contstructors
  * @constructor
  */
-vjs.CoreObject = vjs['CoreObject'] = function(){};
+vjs.CoreObject = vjs["CoreObject"] = function() {};
 // Manually exporting vjs['CoreObject'] here for Closure Compiler
 // because of the use of the extend/create class methods
 // If we didn't do this, those functions would get flattend to something like
@@ -16,14 +16,19 @@ vjs.CoreObject = vjs['CoreObject'] = function(){};
  * @return {vjs.CoreObject} Returns an object that inherits from CoreObject
  * @this {*}
  */
-vjs.CoreObject.extend = function(props){
+vjs.CoreObject.extend = function(props) {
   var init, subObj;
 
   props = props || {};
   // Set up the constructor using the supplied init method
   // or using the init of the parent object
   // Make sure to check the unobfuscated version for external libs
-  init = props['init'] || props.init || this.prototype['init'] || this.prototype.init || function(){};
+  init =
+    props["init"] ||
+    props.init ||
+    this.prototype["init"] ||
+    this.prototype.init ||
+    function() {};
   // In Resig's simple class inheritance (previously used) the constructor
   //  is a function that calls `this.init.apply(arguments)`
   // However that would prevent us from using `ParentObject.call(this);`
@@ -33,7 +38,7 @@ vjs.CoreObject.extend = function(props){
   //    `ParentObject.prototype.init.apply(this, argumnents);`
   //  Bleh. We're not creating a _super() function, so it's good to keep
   //  the parent constructor reference simple.
-  subObj = function(){
+  subObj = function() {
     init.apply(this, arguments);
   };
 
@@ -63,7 +68,7 @@ vjs.CoreObject.extend = function(props){
  * @return {vjs.CoreObject} Returns an instance of a CoreObject subclass
  * @this {*}
  */
-vjs.CoreObject.create = function(){
+vjs.CoreObject.create = function() {
   // Create a new object that inherits from this object's prototype
   var inst = vjs.obj.create(this.prototype);
 
