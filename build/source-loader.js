@@ -46,27 +46,29 @@ var sourceFiles = [
 ];
 
 // Allow overriding the default project root
-var projectRoot = projectRoot || '../';
+var projectRoot = projectRoot || "../";
 
-function loadScripts(scriptsArr){
+function loadScripts(scriptsArr) {
   for (var i = 0; i < scriptsArr.length; i++) {
     // Using document.write because that's the easiest way to avoid triggering
     // asynchrnous script loading
-    document.write( "<script src='" + projectRoot + scriptsArr[i] + "'><\/script>" );
+    document.write(
+      "<script src='" + projectRoot + scriptsArr[i] + "'></script>"
+    );
   }
 }
 
 // We use this file in the grunt build script to load the same source file list
 // and don't want to load the scripts there.
-if (typeof blockSourceLoading === 'undefined') {
+if (typeof blockSourceLoading === "undefined") {
   loadScripts(sourceFiles);
 
   // Allow for making Flash first
   if (window.location.href.indexOf("?flash") !== -1) {
     // Using doc.write to load this script to, otherwise when it runs videojs
     // is undefined
-    document.write('<script>videojs.options.techOrder = ["flash"];videojs.options.flash.swf = "../src/swf/video-js.swf";</script>')
+    document.write(
+      '<script>videojs.options.techOrder = ["flash"];videojs.options.flash.swf = "../src/swf/video-js.swf";</script>'
+    );
   }
 }
-
-
