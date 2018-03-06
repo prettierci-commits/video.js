@@ -1,21 +1,21 @@
-CONTRIBUTING
-============
+# CONTRIBUTING
+
 So you want to help out? Great! There's a number of ways you can get involved.
 
-  * [File and discuss issues](#filing-issues)
-  * [Contribute code](#contributing-code)
-  * [Build and share plugins](docs/plugins.md)
-  * [Answer questions on Stack Overflow](http://stackoverflow.com/questions/tagged/video.js)
+* [File and discuss issues](#filing-issues)
+* [Contribute code](#contributing-code)
+* [Build and share plugins](docs/plugins.md)
+* [Answer questions on Stack Overflow](http://stackoverflow.com/questions/tagged/video.js)
 
 There's also other Video.js projects where you can help. (check the [video.js org](https://github.com/videojs) for an up-to-date list of projects)
 
-  * [Videojs.com](https://github.com/videojs/videojs.com)
-  * [Video.js flash player](https://github.com/videojs/video-js-swf)
-  * [Player skin designer](https://github.com/videojs/designer)
-  * [Contribflow](https://github.com/zencoder/contribflow)
+* [Videojs.com](https://github.com/videojs/videojs.com)
+* [Video.js flash player](https://github.com/videojs/video-js-swf)
+* [Player skin designer](https://github.com/videojs/designer)
+* [Contribflow](https://github.com/zencoder/contribflow)
 
-Filing issues
--------------
+## Filing issues
+
 [GitHub Issues](https://github.com/videojs/video.js/issues) are used for all discussions around the codebase, including **bugs**, **features**, and other **enhancements**.
 
 ### Reporting a Bug
@@ -64,31 +64,31 @@ Here's an example:
 
 2. [Search the issues](https://github.com/videojs/video.js/issues) for any previous requests for the same feature, and give a thumbs up or +1 on existing requests.
 
-2. If no previous requests exist, create a new issue. Please be as clear as possible about why the feautre is needed and the intended use case.
+3. If no previous requests exist, create a new issue. Please be as clear as possible about why the feautre is needed and the intended use case.
 
 **[Request a feature](https://github.com/videojs/video.js/issues/new)**
 
-Contributing code
------------------
+## Contributing code
 
 To contibute code you'll need to be able to build a copy of Video.js and run tests locally. There are a few requirements before getting started.
 
-- Node.js -- Video.js uses Node for build and test automation. Node is available for Windows, Mac OS X, Linux, and SunOS, as well as source code if that doesn't scare you. [Download and install Node.js](http://nodejs.org/download/)
+* Node.js -- Video.js uses Node for build and test automation. Node is available for Windows, Mac OS X, Linux, and SunOS, as well as source code if that doesn't scare you. [Download and install Node.js](http://nodejs.org/download/)
 
-- grunt-cli -- Install grunt-cli globally so that you will have the correct version of grunt available for any project that needs it.
+* grunt-cli -- Install grunt-cli globally so that you will have the correct version of grunt available for any project that needs it.
 
   On Unix-based systems, you'll have to do this as a superuser:
 
 ```bash
 sudo npm install -g grunt-cli
 ```
-  On Windows, you can just run:
+
+On Windows, you can just run:
 
 ```bash
 npm install -g grunt-cli
 ```
 
-- Contribflow -- A homegrown git workflow tool for managing feature/hotfix branches and submitting pull requests. If you have your own preferred git workflow, contribflow isn't required, but the following instructions will assume you're using it.
+* Contribflow -- A homegrown git workflow tool for managing feature/hotfix branches and submitting pull requests. If you have your own preferred git workflow, contribflow isn't required, but the following instructions will assume you're using it.
 
   On Unix-based systems, you'll have to do this as a superuser:
 
@@ -96,7 +96,7 @@ npm install -g grunt-cli
 sudo npm install -g contribflow
 ```
 
-  On Windows, you can just run:
+On Windows, you can just run:
 
 ```bash
 npm install -g contribflow
@@ -124,7 +124,7 @@ Assign the original repo to a remote called "upstream"
 git remote add upstream https://github.com/videojs/video.js.git
 ```
 
->In the future, if you want to pull in updates to video.js that happened after you cloned the main repo, you can run:
+> In the future, if you want to pull in updates to video.js that happened after you cloned the main repo, you can run:
 >
 > ```bash
 > git checkout master
@@ -162,7 +162,7 @@ Start a new development branch
 contrib feature start
 ```
 
-You'll be prompted to name the branch.  After that, contrib will create the branch locally, and use git to push it up to your origin, and track it.  You're now ready to start building your feature or fixing that bug! Be sure to read the [Code Style Guide](#code-style-guide).
+You'll be prompted to name the branch. After that, contrib will create the branch locally, and use git to push it up to your origin, and track it. You're now ready to start building your feature or fixing that bug! Be sure to read the [Code Style Guide](#code-style-guide).
 
 While you're developing, you can ensure your changes are working by writing tests (in the `test` directory) and running `grunt test`.
 
@@ -174,13 +174,13 @@ open sandbox/index.html
 ```
 
 > #### NOTE: Testing Flash Locally in Chrome
+>
 > Chrome 21+ (as of 2013/01/01) doens't run Flash files that are local and loaded into a locally accessed page (file:///).
 > To get around this you can do either of the following:
 >
 > 1. Do your development and testing using a local HTTP server.
 >
 > 2. [Disable the version of Flash included with Chrome](http://helpx.adobe.com/flash-player/kb/flash-player-google-chrome.html#How_can_I_run_debugger_or_alternate_versions_of_Flash_Player_in_Google_Chrome) and enable a system-wide version of Flash instead.
-
 
 Commit and push changes as you go (using git directly). Write thorough descriptions of your changes in your commit messages.
 
@@ -213,7 +213,7 @@ Use contrib to submit a a pull request (make sure you're in your feature branch)
 contrib feature submit
 ```
 
-You'll be prompted for title and description for the Pull Request.  After that, contrib will use Git to submit your pull request to video.js.
+You'll be prompted for title and description for the Pull Request. After that, contrib will use Git to submit your pull request to video.js.
 
 You're Done! (except for cleanup.) To clean up your feature or hotfix branch:
 
@@ -234,14 +234,16 @@ Run this command to clean up your bug fix:
 ```bash
 contrib hotfix delete
 ```
+
 > PLEASE NOTE: THIS WILL DELETE YOUR LOCAL AND REMOTE COPIES OF THE FEATURE.
 > This is meant to clean up your local and remote branches, so make sure any changes you don't want to lose have been pulled into the parent project or another branch first.
 
-Code Style Guide
-----------------
+## Code Style Guide
+
 Please follow [Google's JavaScript Style Guide](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml) to the letter. If your editor supports [.editorconfig](http://editorconfig.org/#download) it will make it easier to manage differences from your own coding style.
 
 ### Style examples include:
+
 * Two space indents.
 * Delimit strings with single-quotes `'`, not double-quotes `"`.
 * No trailing whitespace, except in markdown files where a linebreak must be forced.
@@ -252,7 +254,9 @@ Please follow [Google's JavaScript Style Guide](http://google-styleguide.googlec
 If you happen to find something in the codebase that does not follow the style guide, that's a good opportunity to make your first contribution!
 
 ---
+
 ### Doc Credit
+
 This doc was inspired by some great contribution guide examples including [contribute.md template](https://github.com/contribute-md/contribute-md-template),
 [grunt](https://github.com/gruntjs/grunt/wiki/Contributing),
 [html5 boilerplate](https://github.com/h5bp/html5-boilerplate/blob/master/CONTRIBUTING.md),
