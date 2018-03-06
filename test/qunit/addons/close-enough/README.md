@@ -1,5 +1,4 @@
-Close-Enough - A QUnit Addon For Number Approximations
-================================
+# Close-Enough - A QUnit Addon For Number Approximations
 
 This addon for QUnit adds close and notClose assertion methods, to test that
 numbers are close enough (or different enough) from an expected number, with
@@ -12,6 +11,6 @@ Usage:
 
 Where:
 
-  * maxDifference: the maximum inclusive difference allowed between the actual and expected numbers
-  * minDifference: the minimum exclusive difference allowed between the actual and expected numbers
-  * actual, expected, message: The usual
+* maxDifference: the maximum inclusive difference allowed between the actual and expected numbers
+* minDifference: the minimum exclusive difference allowed between the actual and expected numbers
+* actual, expected, message: The usual

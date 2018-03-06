@@ -8,29 +8,36 @@
  *
  * @type {Image}
  */
-;(function(i,w,n,e,l){
-  l=w.location;
+(function(i, w, n, e, l) {
+  l = w.location;
 
   // Setting the source of an image will load the URL even without adding to dom
   // Using //www, still seems to work for https even though ssl.google is used by google
-  i.src='//www.google-analytics.com/__utm.gif'
+  i.src =
+    "//www.google-analytics.com/__utm.gif" +
     // Version
-    +'?utmwv=5.4.2'
+    "?utmwv=5.4.2" +
     // ID
-    +'&utmac=UA-16505296-2'
+    "&utmac=UA-16505296-2" +
     // Sessions
     // &utms=2
     // Cache breaker (using utmcc to do this)
-    +'&utmn='+1
-    +'&utmhn='+e(l.hostname)
+    "&utmn=" +
+    1 +
+    "&utmhn=" +
+    e(l.hostname) +
     // Encoding
     // &utmcs=UTF-8
-    +'&utmsr='+w.screen.availWidth+'x'+w.screen.availHeight
+    "&utmsr=" +
+    w.screen.availWidth +
+    "x" +
+    w.screen.availHeight +
     // Browser window
     // &utmvp=1057x1105
     // Color depth
     // &utmsc=24-bit
-    +'&utmul='+(n.language||n.userLanguage||'').toLowerCase()
+    "&utmul=" +
+    (n.language || n.userLanguage || "").toLowerCase() +
     // Java
     // &utmje=1
     // Flash version
@@ -41,16 +48,19 @@
     // &utmhid=1112291628
     // Referrer, '-' is none
     // Using current page as referrer so stats show up cleaner than "Direct"
-    +'&utmr='+e(l.href)
-    +'&utmp='+e(l.hostname+l.pathname)
+    "&utmr=" +
+    e(l.href) +
+    "&utmp=" +
+    e(l.hostname + l.pathname) +
     // Current time stamp
     // &utmht=1370890439353
     // ?
     // &utmu=q
     // Cookies! Manually setting visitor ID and setting everything else to 1
     // Random number used as cache buster instead of utmn
-    +'&utmcc=__utma%3D1.'+Math.floor(Math.random()*1e10)+'.1.1.1.1%3B'
+    "&utmcc=__utma%3D1." +
+    Math.floor(Math.random() * 1e10) +
+    ".1.1.1.1%3B" +
     // Custom Var: vjsv is the variable name and 1.0.0 is the VJS version
-    +'&utme=8(vjsv)9(v0.0.0)'
-  ;
-})(new Image(),window,navigator,encodeURIComponent);
+    "&utme=8(vjsv)9(v0.0.0)";
+})(new Image(), window, navigator, encodeURIComponent);

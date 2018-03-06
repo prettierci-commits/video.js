@@ -6,32 +6,36 @@
  */
 vjs.CurrentTimeDisplay = vjs.Component.extend({
   /** @constructor */
-  init: function(player, options){
+  init: function(player, options) {
     vjs.Component.call(this, player, options);
 
-    player.on('timeupdate', vjs.bind(this, this.updateContent));
+    player.on("timeupdate", vjs.bind(this, this.updateContent));
   }
 });
 
-vjs.CurrentTimeDisplay.prototype.createEl = function(){
-  var el = vjs.Component.prototype.createEl.call(this, 'div', {
-    className: 'vjs-current-time vjs-time-controls vjs-control'
+vjs.CurrentTimeDisplay.prototype.createEl = function() {
+  var el = vjs.Component.prototype.createEl.call(this, "div", {
+    className: "vjs-current-time vjs-time-controls vjs-control"
   });
 
-  this.content = vjs.createEl('div', {
-    className: 'vjs-current-time-display',
-    innerHTML: '<span class="vjs-control-text">Current Time </span>' + '0:00', // label the current time for screen reader users
-    'aria-live': 'off' // tell screen readers not to automatically read the time as it changes
+  this.content = vjs.createEl("div", {
+    className: "vjs-current-time-display",
+    innerHTML: '<span class="vjs-control-text">Current Time </span>' + "0:00", // label the current time for screen reader users
+    "aria-live": "off" // tell screen readers not to automatically read the time as it changes
   });
 
-  el.appendChild(vjs.createEl('div').appendChild(this.content));
+  el.appendChild(vjs.createEl("div").appendChild(this.content));
   return el;
 };
 
-vjs.CurrentTimeDisplay.prototype.updateContent = function(){
+vjs.CurrentTimeDisplay.prototype.updateContent = function() {
   // Allows for smooth scrubbing, when player can't keep up.
-  var time = (this.player_.scrubbing) ? this.player_.getCache().currentTime : this.player_.currentTime();
-  this.content.innerHTML = '<span class="vjs-control-text">Current Time </span>' + vjs.formatTime(time, this.player_.duration());
+  var time = this.player_.scrubbing
+    ? this.player_.getCache().currentTime
+    : this.player_.currentTime();
+  this.content.innerHTML =
+    '<span class="vjs-control-text">Current Time </span>' +
+    vjs.formatTime(time, this.player_.duration());
 };
 
 /**
@@ -42,31 +46,33 @@ vjs.CurrentTimeDisplay.prototype.updateContent = function(){
  */
 vjs.DurationDisplay = vjs.Component.extend({
   /** @constructor */
-  init: function(player, options){
+  init: function(player, options) {
     vjs.Component.call(this, player, options);
 
-    player.on('timeupdate', vjs.bind(this, this.updateContent)); // this might need to be changes to 'durationchange' instead of 'timeupdate' eventually, however the durationchange event fires before this.player_.duration() is set, so the value cannot be written out using this method. Once the order of durationchange and this.player_.duration() being set is figured out, this can be updated.
+    player.on("timeupdate", vjs.bind(this, this.updateContent)); // this might need to be changes to 'durationchange' instead of 'timeupdate' eventually, however the durationchange event fires before this.player_.duration() is set, so the value cannot be written out using this method. Once the order of durationchange and this.player_.duration() being set is figured out, this can be updated.
   }
 });
 
-vjs.DurationDisplay.prototype.createEl = function(){
-  var el = vjs.Component.prototype.createEl.call(this, 'div', {
-    className: 'vjs-duration vjs-time-controls vjs-control'
+vjs.DurationDisplay.prototype.createEl = function() {
+  var el = vjs.Component.prototype.createEl.call(this, "div", {
+    className: "vjs-duration vjs-time-controls vjs-control"
   });
 
-  this.content = vjs.createEl('div', {
-    className: 'vjs-duration-display',
-    innerHTML: '<span class="vjs-control-text">Duration Time </span>' + '0:00', // label the duration time for screen reader users
-    'aria-live': 'off' // tell screen readers not to automatically read the time as it changes
+  this.content = vjs.createEl("div", {
+    className: "vjs-duration-display",
+    innerHTML: '<span class="vjs-control-text">Duration Time </span>' + "0:00", // label the duration time for screen reader users
+    "aria-live": "off" // tell screen readers not to automatically read the time as it changes
   });
 
-  el.appendChild(vjs.createEl('div').appendChild(this.content));
+  el.appendChild(vjs.createEl("div").appendChild(this.content));
   return el;
 };
 
-vjs.DurationDisplay.prototype.updateContent = function(){
+vjs.DurationDisplay.prototype.updateContent = function() {
   if (this.player_.duration()) {
-      this.content.innerHTML = '<span class="vjs-control-text">Duration Time </span>' + vjs.formatTime(this.player_.duration()); // label the duration time for screen reader users
+    this.content.innerHTML =
+      '<span class="vjs-control-text">Duration Time </span>' +
+      vjs.formatTime(this.player_.duration()); // label the duration time for screen reader users
   }
 };
 
@@ -78,15 +84,15 @@ vjs.DurationDisplay.prototype.updateContent = function(){
  */
 vjs.TimeDivider = vjs.Component.extend({
   /** @constructor */
-  init: function(player, options){
+  init: function(player, options) {
     vjs.Component.call(this, player, options);
   }
 });
 
-vjs.TimeDivider.prototype.createEl = function(){
-  return vjs.Component.prototype.createEl.call(this, 'div', {
-    className: 'vjs-time-divider',
-    innerHTML: '<div><span>/</span></div>'
+vjs.TimeDivider.prototype.createEl = function() {
+  return vjs.Component.prototype.createEl.call(this, "div", {
+    className: "vjs-time-divider",
+    innerHTML: "<div><span>/</span></div>"
   });
 };
 
@@ -98,33 +104,37 @@ vjs.TimeDivider.prototype.createEl = function(){
  */
 vjs.RemainingTimeDisplay = vjs.Component.extend({
   /** @constructor */
-  init: function(player, options){
+  init: function(player, options) {
     vjs.Component.call(this, player, options);
 
-    player.on('timeupdate', vjs.bind(this, this.updateContent));
+    player.on("timeupdate", vjs.bind(this, this.updateContent));
   }
 });
 
-vjs.RemainingTimeDisplay.prototype.createEl = function(){
-  var el = vjs.Component.prototype.createEl.call(this, 'div', {
-    className: 'vjs-remaining-time vjs-time-controls vjs-control'
+vjs.RemainingTimeDisplay.prototype.createEl = function() {
+  var el = vjs.Component.prototype.createEl.call(this, "div", {
+    className: "vjs-remaining-time vjs-time-controls vjs-control"
   });
 
-  this.content = vjs.createEl('div', {
-    className: 'vjs-remaining-time-display',
-    innerHTML: '<span class="vjs-control-text">Remaining Time </span>' + '-0:00', // label the remaining time for screen reader users
-    'aria-live': 'off' // tell screen readers not to automatically read the time as it changes
+  this.content = vjs.createEl("div", {
+    className: "vjs-remaining-time-display",
+    innerHTML:
+      '<span class="vjs-control-text">Remaining Time </span>' + "-0:00", // label the remaining time for screen reader users
+    "aria-live": "off" // tell screen readers not to automatically read the time as it changes
   });
 
-  el.appendChild(vjs.createEl('div').appendChild(this.content));
+  el.appendChild(vjs.createEl("div").appendChild(this.content));
   return el;
 };
 
-vjs.RemainingTimeDisplay.prototype.updateContent = function(){
+vjs.RemainingTimeDisplay.prototype.updateContent = function() {
   if (this.player_.duration()) {
-      if (this.player_.duration()) {
-          this.content.innerHTML = '<span class="vjs-control-text">Remaining Time </span>' + '-'+ vjs.formatTime(this.player_.remainingTime());
-      }
+    if (this.player_.duration()) {
+      this.content.innerHTML =
+        '<span class="vjs-control-text">Remaining Time </span>' +
+        "-" +
+        vjs.formatTime(this.player_.remainingTime());
+    }
   }
 
   // Allows for smooth scrubbing, when player can't keep up.
