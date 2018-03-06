@@ -3,9 +3,9 @@
  */
 
 // HTML5 Shiv. Must be in <head> to support older browsers.
-document.createElement('video');
-document.createElement('audio');
-document.createElement('track');
+document.createElement("video");
+document.createElement("audio");
+document.createElement("track");
 
 /**
  * Doubles as the main function for users to create a player instance and also
@@ -16,15 +16,14 @@ document.createElement('track');
  * @param  {Function=} ready        Optional ready callback
  * @return {vjs.Player}             A player instance
  */
-var vjs = function(id, options, ready){
+var vjs = function(id, options, ready) {
   var tag; // Element of ID
 
   // Allow for element or ID to be passed in
   // String ID
-  if (typeof id === 'string') {
-
+  if (typeof id === "string") {
     // Adjust for jQuery ID syntax
-    if (id.indexOf('#') === 0) {
+    if (id.indexOf("#") === 0) {
       id = id.slice(1);
     }
 
@@ -32,24 +31,25 @@ var vjs = function(id, options, ready){
     if (vjs.players[id]) {
       return vjs.players[id];
 
-    // Otherwise get element for ID
+      // Otherwise get element for ID
     } else {
       tag = vjs.el(id);
     }
 
-  // ID is a media element
+    // ID is a media element
   } else {
     tag = id;
   }
 
   // Check for a useable element
-  if (!tag || !tag.nodeName) { // re: nodeName, could be a box div also
-    throw new TypeError('The element or ID supplied is not valid. (videojs)'); // Returns
+  if (!tag || !tag.nodeName) {
+    // re: nodeName, could be a box div also
+    throw new TypeError("The element or ID supplied is not valid. (videojs)"); // Returns
   }
 
   // Element may have a player attr referring to an already created player instance.
   // If not, set up a new player and return the instance.
-  return tag['player'] || new vjs.Player(tag, options, ready);
+  return tag["player"] || new vjs.Player(tag, options, ready);
 };
 
 // Extended name, also available externally, window.videojs
@@ -57,8 +57,9 @@ var videojs = vjs;
 window.videojs = window.vjs = vjs;
 
 // CDN Version. Used to target right flash swf.
-vjs.CDN_VERSION = 'GENERATED_CDN_VSN';
-vjs.ACCESS_PROTOCOL = ('https:' == document.location.protocol ? 'https://' : 'http://');
+vjs.CDN_VERSION = "GENERATED_CDN_VSN";
+vjs.ACCESS_PROTOCOL =
+  "https:" == document.location.protocol ? "https://" : "http://";
 
 /**
  * Global Player instance options, surfaced from vjs.Player.prototype.options_
@@ -69,33 +70,34 @@ vjs.ACCESS_PROTOCOL = ('https:' == document.location.protocol ? 'https://' : 'ht
  */
 vjs.options = {
   // Default order of fallback technology
-  'techOrder': ['html5','flash'],
+  techOrder: ["html5", "flash"],
   // techOrder: ['flash','html5'],
 
-  'html5': {},
-  'flash': {},
+  html5: {},
+  flash: {},
 
   // Default of web browser is 300x150. Should rely on source width/height.
-  'width': 300,
-  'height': 150,
+  width: 300,
+  height: 150,
   // defaultVolume: 0.85,
-  'defaultVolume': 0.00, // The freakin seaguls are driving me crazy!
+  defaultVolume: 0.0, // The freakin seaguls are driving me crazy!
 
   // Included control sets
-  'children': {
-    'mediaLoader': {},
-    'posterImage': {},
-    'textTrackDisplay': {},
-    'loadingSpinner': {},
-    'bigPlayButton': {},
-    'controlBar': {}
+  children: {
+    mediaLoader: {},
+    posterImage: {},
+    textTrackDisplay: {},
+    loadingSpinner: {},
+    bigPlayButton: {},
+    controlBar: {}
   }
 };
 
 // Set CDN Version of swf
 // The added (+) blocks the replace from changing this GENERATED_CDN_VSN string
-if (vjs.CDN_VERSION !== 'GENERATED'+'_CDN_VSN') {
-  videojs.options['flash']['swf'] = vjs.ACCESS_PROTOCOL + 'vjs.zencdn.net/'+vjs.CDN_VERSION+'/video-js.swf';
+if (vjs.CDN_VERSION !== "GENERATED" + "_CDN_VSN") {
+  videojs.options["flash"]["swf"] =
+    vjs.ACCESS_PROTOCOL + "vjs.zencdn.net/" + vjs.CDN_VERSION + "/video-js.swf";
 }
 
 /**
