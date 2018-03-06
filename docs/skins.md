@@ -1,5 +1,4 @@
-Skins
-=====
+# Skins
 
 The default Video.js skin is made using HTML and CSS, so there's no need to learn a complicated skinning language to update colors or even create an entirely new skin.
 
@@ -10,7 +9,9 @@ The easiest way to try this out is by using the [player skin designer](http://de
 When you create a new skin, you can either override styles in the default skin:
 
 ```css
-.vjs-default-skin .vjs-play-progress { background: #900; }
+.vjs-default-skin .vjs-play-progress {
+  background: #900;
+}
 ```
 
 Or remove the 'vjs-default-skin' class from the video tag and create a new skin from scratch.
@@ -20,4 +21,3 @@ Or remove the 'vjs-default-skin' class from the video tag and create a new skin 
 ```
 
 More custom skins will be available for download soon. If you have one you like you can share it by forking [this example on CodePen.io](http://codepen.io/heff/pen/EarCt), and adding a link on the [Skins wiki page](https://github.com/videojs/video.js/wiki/Skins).
-

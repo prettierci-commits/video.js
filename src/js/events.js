@@ -14,7 +14,7 @@
  * @param  {String}   type Type of event to bind to.
  * @param  {Function} fn   Event listener.
  */
-vjs.on = function(elem, type, fn){
+vjs.on = function(elem, type, fn) {
   var data = vjs.getData(elem);
 
   // We need a place to store all our handler data
@@ -29,8 +29,7 @@ vjs.on = function(elem, type, fn){
   if (!data.dispatcher) {
     data.disabled = false;
 
-    data.dispatcher = function (event){
-
+    data.dispatcher = function(event) {
       if (data.disabled) return;
       event = vjs.fixEvent(event);
 
@@ -55,7 +54,7 @@ vjs.on = function(elem, type, fn){
     if (document.addEventListener) {
       elem.addEventListener(type, data.dispatcher, false);
     } else if (document.attachEvent) {
-      elem.attachEvent('on' + type, data.dispatcher);
+      elem.attachEvent("on" + type, data.dispatcher);
     }
   }
 };
@@ -73,12 +72,14 @@ vjs.off = function(elem, type, fn) {
   var data = vjs.getData(elem);
 
   // If no events exist, nothing to unbind
-  if (!data.handlers) { return; }
+  if (!data.handlers) {
+    return;
+  }
 
   // Utility function
-  var removeType = function(t){
-     data.handlers[t] = [];
-     vjs.cleanUpEvents(elem,t);
+  var removeType = function(t) {
+    data.handlers[t] = [];
+    vjs.cleanUpEvents(elem, t);
   };
 
   // Are we removing all bound events?
@@ -128,7 +129,7 @@ vjs.cleanUpEvents = function(elem, type) {
     if (document.removeEventListener) {
       elem.removeEventListener(type, data.dispatcher, false);
     } else if (document.detachEvent) {
-      elem.detachEvent('on' + type, data.dispatcher);
+      elem.detachEvent("on" + type, data.dispatcher);
     }
   }
 
@@ -155,9 +156,12 @@ vjs.cleanUpEvents = function(elem, type) {
  * @return {Object}
  */
 vjs.fixEvent = function(event) {
-
-  function returnTrue() { return true; }
-  function returnFalse() { return false; }
+  function returnTrue() {
+    return true;
+  }
+  function returnFalse() {
+    return false;
+  }
 
   // Test if fixing up is needed
   // Used to check if !event.stopPropagation instead of isPropagationStopped
@@ -175,7 +179,7 @@ vjs.fixEvent = function(event) {
     // TODO: Probably best to create a whitelist of event props
     for (var key in old) {
       // Safari 6.0.3 warns you if you try to copy deprecated layerX/Y
-      if (key !== 'layerX' && key !== 'layerY') {
+      if (key !== "layerX" && key !== "layerY") {
         event[key] = old[key];
       }
     }
@@ -186,12 +190,11 @@ vjs.fixEvent = function(event) {
     }
 
     // Handle which other element the event is related to
-    event.relatedTarget = event.fromElement === event.target ?
-      event.toElement :
-      event.fromElement;
+    event.relatedTarget =
+      event.fromElement === event.target ? event.toElement : event.fromElement;
 
     // Stop the default browser action
-    event.preventDefault = function () {
+    event.preventDefault = function() {
       if (old.preventDefault) {
         old.preventDefault();
       }
@@ -202,7 +205,7 @@ vjs.fixEvent = function(event) {
     event.isDefaultPrevented = returnFalse;
 
     // Stop the event from bubbling
-    event.stopPropagation = function () {
+    event.stopPropagation = function() {
       if (old.stopPropagation) {
         old.stopPropagation();
       }
@@ -213,7 +216,7 @@ vjs.fixEvent = function(event) {
     event.isPropagationStopped = returnFalse;
 
     // Stop the event from bubbling and executing other handlers
-    event.stopImmediatePropagation = function () {
+    event.stopImmediatePropagation = function() {
       if (old.stopImmediatePropagation) {
         old.stopImmediatePropagation();
       }
@@ -225,14 +228,17 @@ vjs.fixEvent = function(event) {
 
     // Handle mouse position
     if (event.clientX != null) {
-      var doc = document.documentElement, body = document.body;
+      var doc = document.documentElement,
+        body = document.body;
 
-      event.pageX = event.clientX +
-        (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
-        (doc && doc.clientLeft || body && body.clientLeft || 0);
-      event.pageY = event.clientY +
-        (doc && doc.scrollTop || body && body.scrollTop || 0) -
-        (doc && doc.clientTop || body && body.clientTop || 0);
+      event.pageX =
+        event.clientX +
+        ((doc && doc.scrollLeft) || (body && body.scrollLeft) || 0) -
+        ((doc && doc.clientLeft) || (body && body.clientLeft) || 0);
+      event.pageY =
+        event.clientY +
+        ((doc && doc.scrollTop) || (body && body.scrollTop) || 0) -
+        ((doc && doc.clientTop) || (body && body.clientTop) || 0);
     }
 
     // Handle key presses
@@ -241,9 +247,8 @@ vjs.fixEvent = function(event) {
     // Fix button for mouse clicks:
     // 0 == left; 1 == middle; 2 == right
     if (event.button != null) {
-      event.button = (event.button & 1 ? 0 :
-        (event.button & 4 ? 1 :
-          (event.button & 2 ? 2 : 0)));
+      event.button =
+        event.button & 1 ? 0 : event.button & 4 ? 1 : event.button & 2 ? 2 : 0;
     }
   }
 
@@ -260,14 +265,14 @@ vjs.trigger = function(elem, event) {
   // Fetches element data and a reference to the parent (for bubbling).
   // Don't want to add a data object to cache for every parent,
   // so checking hasData first.
-  var elemData = (vjs.hasData(elem)) ? vjs.getData(elem) : {};
+  var elemData = vjs.hasData(elem) ? vjs.getData(elem) : {};
   var parent = elem.parentNode || elem.ownerDocument;
-      // type = event.type || event,
-      // handler;
+  // type = event.type || event,
+  // handler;
 
   // If an event name was passed as a string, creates an event out of it
-  if (typeof event === 'string') {
-    event = { type:event, target:elem };
+  if (typeof event === "string") {
+    event = { type: event, target: elem };
   }
   // Normalizes the event properties.
   event = vjs.fixEvent(event);
@@ -282,7 +287,7 @@ vjs.trigger = function(elem, event) {
   if (parent && !event.isPropagationStopped() && event.bubbles !== false) {
     vjs.trigger(parent, event);
 
-  // If at the top of the DOM, triggers the default action unless disabled.
+    // If at the top of the DOM, triggers the default action unless disabled.
   } else if (!parent && !event.isDefaultPrevented()) {
     var targetData = vjs.getData(event.target);
 
@@ -291,7 +296,7 @@ vjs.trigger = function(elem, event) {
       // Temporarily disables event dispatching on the target as we have already executed the handler.
       targetData.disabled = true;
       // Executes the default action.
-      if (typeof event.target[event.type] === 'function') {
+      if (typeof event.target[event.type] === "function") {
         event.target[event.type]();
       }
       // Re-enables event dispatching.
@@ -330,7 +335,7 @@ vjs.trigger = function(elem, event) {
  * @return {[type]}
  */
 vjs.one = function(elem, type, fn) {
-  var func = function(){
+  var func = function() {
     vjs.off(elem, type, func);
     fn.apply(this, arguments);
   };
